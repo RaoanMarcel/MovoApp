@@ -1,5 +1,6 @@
 package Movo.demo.Repositories
 
+import Movo.demo.Models.Motorista
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

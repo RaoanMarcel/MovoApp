@@ -1,4 +1,4 @@
-package Movo.demo.Controller
+package Movo.demo.Controllers
 
 import Movo.demo.DTO.MotoristaDTO
 import Movo.demo.Models.Motorista
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 class MotoristaController(private val motoristaService: MotoristaService) {
 
     @GetMapping
-    fun listarTodos(): ResponseEntity<List<MotoristaDTO>> {
+    fun listarTodos(): ResponseEntity<List<Unit>> {
         return ResponseEntity.ok(motoristaService.listarTodos())
     }
 
@@ -31,4 +31,5 @@ class MotoristaController(private val motoristaService: MotoristaService) {
         motoristaService.deletar(id)
         return ResponseEntity.noContent().build()
     }
+
 }

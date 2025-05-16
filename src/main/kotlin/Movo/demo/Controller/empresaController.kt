@@ -24,8 +24,7 @@ class EmpresaController(private val empresaService: EmpresaService) {
 
     @PostMapping
     fun cadastrar(@RequestBody empresa: Empresa): ResponseEntity<EmpresaDTO> {
-        val novaEmpresa = empresaService.cadastrar(empresa)
-        return ResponseEntity.ok(novaEmpresa)
+        return ResponseEntity.ok(empresaService.cadastrar(empresa))
     }
 
     @DeleteMapping("/{id}")
@@ -33,4 +32,5 @@ class EmpresaController(private val empresaService: EmpresaService) {
         empresaService.deletar(id)
         return ResponseEntity.noContent().build()
     }
+
 }

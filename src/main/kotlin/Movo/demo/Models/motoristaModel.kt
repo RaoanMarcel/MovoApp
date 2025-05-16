@@ -1,5 +1,6 @@
 package Movo.demo.Models
 
+import Movo.demo.DTO.MotoristaDTO
 import jakarta.persistence.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,6 +42,19 @@ data class Motorista(
     @ManyToOne
     @JoinColumn(name = "role_id")
     val role: Role? = null
-)
+) {
+    fun toDTO(): MotoristaDTO {
+        return MotoristaDTO(
+            id = this.id,
+            nome = this.nome,
+            cpf = this.cpf,
+            cnh = this.cnh,
+            categoriaCnh = this.categoriaCnh,
+            dataValidadeCnh = this.dataValidadeCnh,
+            telefone = this.telefone,
+            email = this.email
+        )
+    }
+}
 
 

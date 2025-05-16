@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 class AlunoController(private val alunoService: AlunoService) {
 
     @GetMapping
-    fun listarTodos(): ResponseEntity<List<*>> {
+    fun listarTodos(): ResponseEntity<List<AlunoDTO>> {
         return ResponseEntity.ok(alunoService.listarTodos())
     }
 
@@ -22,7 +22,7 @@ class AlunoController(private val alunoService: AlunoService) {
     }
 
     @PostMapping
-    fun cadastrar(@RequestBody aluno: Aluno): ResponseEntity<*> {
+    fun cadastrar(@RequestBody aluno: Aluno): ResponseEntity<AlunoDTO> {
         return ResponseEntity.ok(alunoService.cadastrar(aluno))
     }
 
@@ -31,4 +31,5 @@ class AlunoController(private val alunoService: AlunoService) {
         alunoService.deletar(id)
         return ResponseEntity.noContent().build()
     }
+
 }

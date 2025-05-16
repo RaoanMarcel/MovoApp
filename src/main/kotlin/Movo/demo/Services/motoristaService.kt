@@ -4,15 +4,18 @@ import Movo.demo.DTO.MotoristaDTO
 import Movo.demo.Models.Motorista
 import Movo.demo.Repositories.MotoristaRepository
 import Movo.demo.Repositories.RoleRepository
+import Movo.demo.DTO.toDTO
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class MotoristaService(
     private val motoristaRepository: MotoristaRepository,
-    private val roleRepository: RoleRepository
+    private val roleRepository: RoleRepository,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
-    fun listarTodos(): List<MotoristaDTO> {
+    fun listarTodos(): List<Unit> {
         return motoristaRepository.findAll().map { it.toDTO() }
     }
 
@@ -21,12 +24,11 @@ class MotoristaService(
     }
 
     fun cadastrar(motorista: Motorista): MotoristaDTO {
-        // Busca a role MOTORISTA
         val roleMotorista = roleRepository.findByNome("MOTORISTA")
             ?: throw RuntimeException("Role MOTORISTA não encontrada")
 
-        // Cria um novo objeto motorista com a role atribuída.
-        val novoMotorista = motorista.copy(role = roleMotorista)
+        val senhaCriptografada = passwordEncoder.encode(motorista.senha)
+        val novoMotorista = motorista.copy(role = roleMotorista, senha = senhaCriptografada)
 
         return motoristaRepository.save(novoMotorista).toDTO()
     }
@@ -34,18 +36,5 @@ class MotoristaService(
     fun deletar(id: Long) {
         motoristaRepository.deleteById(id)
     }
-}
 
-fun Motorista.toDTO(): MotoristaDTO {
-    return MotoristaDTO(
-        id = this.id,
-        nome = this.nome,
-        cpf = this.cpf,
-        cnh = this.cnh,
-        categoriaCnh = this.categoriaCnh,
-        dataValidadeCnh = this.dataValidadeCnh,
-        telefone = this.telefone,
-        email = this.email
-    )
 }
-
